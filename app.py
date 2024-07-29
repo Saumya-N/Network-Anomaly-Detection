@@ -20,6 +20,10 @@ def login(username, password):
         st.error("Invalid username or password")
 
 
+def logout():
+    st.session_state.logged_in = False
+
+
 # Login Page
 def login_page():
     st.title('Login')
@@ -39,16 +43,22 @@ def main():
             home_module = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(home_module)
             home_module.home_page()
+            if st.sidebar.button("Logout"):
+                logout()
         elif page == "Security Scan":
             spec = importlib.util.spec_from_file_location("model.py", "model.py")
             ml_module = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(ml_module)
             ml_module.detection_page()
+            if st.sidebar.button("Logout"):
+                logout()
         elif page == "Reports":
             spec = importlib.util.spec_from_file_location("report.py", "report.py")
             reports_module = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(reports_module)
             reports_module.reports_page()
+            if st.sidebar.button("Logout"):
+                logout()
     else:
         login_page()
 
