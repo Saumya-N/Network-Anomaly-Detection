@@ -1,4 +1,6 @@
-Streamlit
+streamlit
 numpy
 pandas
+docx
+matplotlib
 scikit-learn

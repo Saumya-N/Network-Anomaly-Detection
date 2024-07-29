@@ -33,7 +33,7 @@ def login_page():
 # Main App
 def main():
     if st.session_state.logged_in:
-        page = st.selectbox("Select Page", ["Home", "Security Scan", "Reports"])
+        page = st.sidebar.selectbox("Select Page", ["Home", "Security Scan", "Reports"])
         if page == "Home":
             spec = importlib.util.spec_from_file_location("home.py", "home.py")
             home_module = importlib.util.module_from_spec(spec)

@@ -3,13 +3,14 @@ import streamlit as st
 from io import BytesIO
 from pptx import Presentation
 from pptx.util import Inches
+from docx.shared import Pt
 import matplotlib.pyplot as plt
 
 # Reports Page
 
 
 def reports_page():
-    st.title('Reports')
+    st.title('Threat Analysis')
     st.write('This page displays KPI metrics and charts based on the Network Anomaly Dataset.')
 
     # Load dataset (you might need to adjust the path)
@@ -63,7 +64,7 @@ def reports_page():
     st.sidebar.markdown("## Export Data")
     csv = data.to_csv(index=False)
     st.sidebar.download_button(
-        label="Download Filtered Data",
+        label="⬇ Download CSV File",
         data=csv,
         file_name='filtered_data.csv',
         mime='text/csv',
@@ -71,7 +72,7 @@ def reports_page():
 
     # Create Matplotlib charts
     def create_charts():
-        fig, ax = plt.subplots(1, 2, figsize=(14, 6))
+        loc_fig, ax = plt.subplots(1, 2, figsize=(14, 6))
 
         # Attack types distribution
         attack_types.plot(kind='bar', ax=ax[0], color='skyblue')
@@ -86,7 +87,7 @@ def reports_page():
         ax[1].set_ylabel('Count')
 
         plt.tight_layout()
-        return fig
+        return loc_fig
 
     fig = create_charts()
 
@@ -95,21 +96,12 @@ def reports_page():
     fig.savefig(img_buf, format='png')
     img_buf.seek(0)
 
-    st.image(img_buf, caption='Charts', use_column_width=True)
+    # st.image(img_buf, caption='Charts', use_column_width=True)
 
-    # Export filtered data
-    st.sidebar.markdown("## Export Data")
-    csv = data.to_csv(index=False)
-    st.sidebar.download_button(
-        label="Download Filtered Data as CSV",
-        data=csv,
-        file_name='filtered_data.csv',
-        mime='text/csv',
-    )
-
+    st.sidebar.markdown("## Export Report")
 
     # Export to PowerPoint
-    def create_ppt(img_buf):
+    def create_ppt(imgbuf):
         prs = Presentation()
         slide_layout = prs.slide_layouts[5]  # Title and Content
 
@@ -134,7 +126,7 @@ def reports_page():
         slide = prs.slides.add_slide(slide_layout)
         title = slide.shapes.title
         title.text = "Charts"
-        slide.shapes.add_picture(img_buf, Inches(1), Inches(1.5), width=Inches(8), height=Inches(4.5))
+        slide.shapes.add_picture(imgbuf, Inches(1), Inches(1.5), width=Inches(8), height=Inches(4.5))
 
         return prs
 
@@ -144,7 +136,7 @@ def reports_page():
     buffer.seek(0)
 
     st.sidebar.download_button(
-        label="Download Report as PowerPoint",
+        label="⬇ Download PowerPoint",
         data=buffer,
         file_name='Network_Anomaly_Report.pptx',
         mime='application/vnd.openxmlformats-officedocument.presentationml.presentation',
