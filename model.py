@@ -97,7 +97,7 @@ def detection_page():
     flag_dict = {'OTH': 0, 'REJ': 1, 'RSTO': 2, 'RSTOS0': 3, 'RSTR': 4, 'S0': 5, 'S1': 6, 'S2': 7,
                  'S3': 8, 'SF': 9, 'SH': 10}
 
-    if st.button('Verify'):
+    if st.button('Scan'):
         # Convert input data
         data = [
             duration, protocol_type_dict[protocol_type], service_dict[service], flag_dict[flag], src_bytes, dst_bytes,

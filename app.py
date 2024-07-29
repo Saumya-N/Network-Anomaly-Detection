@@ -33,13 +33,13 @@ def login_page():
 # Main App
 def main():
     if st.session_state.logged_in:
-        page = st.selectbox("Select Page", ["Home", "Detection", "Reports"])
+        page = st.selectbox("Select Page", ["Home", "Security Scan", "Reports"])
         if page == "Home":
             spec = importlib.util.spec_from_file_location("home.py", "home.py")
             home_module = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(home_module)
             home_module.home_page()
-        elif page == "Detection":
+        elif page == "Security Scan":
             spec = importlib.util.spec_from_file_location("model.py", "model.py")
             ml_module = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(ml_module)
