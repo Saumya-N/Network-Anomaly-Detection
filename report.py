@@ -6,9 +6,8 @@ from pptx.util import Inches
 from docx.shared import Pt
 import matplotlib.pyplot as plt
 
+
 # Reports Page
-
-
 def reports_page():
     st.title('Threat Analysis')
     st.write('This page displays KPI metrics and charts based on the Network Anomaly Dataset.')
