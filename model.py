@@ -8,6 +8,7 @@ with open('model/model.pkl', 'rb') as f:
 
 
 def detection_page():
+    st.image('bkg.png', use_column_width=True)
 
     # Title of the app
     st.title('Network Anomaly Detection')
@@ -134,4 +135,3 @@ def detection_page():
             f"<h4>{prediction_text}</h4>",
             unsafe_allow_html=True
         )
-    st.image('bkg.jpg')

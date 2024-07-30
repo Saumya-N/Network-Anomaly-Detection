@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 
 # Reports Page
 def reports_page():
+    st.image('bkg.png', use_column_width=True)
     st.title('Threat Analysis')
     st.write('This page displays KPI metrics and charts based on the Network Anomaly Dataset.')
 
@@ -140,5 +141,3 @@ def reports_page():
         file_name='Network_Anomaly_Report.pptx',
         mime='application/vnd.openxmlformats-officedocument.presentationml.presentation',
     )
-
-    st.image('bkg.jpg')

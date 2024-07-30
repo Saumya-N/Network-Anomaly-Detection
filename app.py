@@ -26,12 +26,12 @@ def logout():
 
 # Login Page
 def login_page():
+    st.image('bkg.png', use_column_width=True)
     st.title('Login')
     username = st.text_input("Username")
     password = st.text_input("Password", type="password")
     if st.button("Login"):
         login(username, password)
-    st.image('bkg.png')
 
 
 # Main App
