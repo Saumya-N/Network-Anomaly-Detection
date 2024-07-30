@@ -31,7 +31,7 @@ def login_page():
     password = st.text_input("Password", type="password")
     if st.button("Login"):
         login(username, password)
-    st.image('bkg.jpg')
+    st.image('bkg.png')
 
 
 # Main App
