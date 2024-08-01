@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import pickle
+from sklearn.preprocessing import LabelEncoder
 
 # Load model
 with open('model/model.pkl', 'rb') as f:
@@ -23,76 +24,56 @@ def detection_page():
     if uploaded_file:
         data = pd.read_csv(uploaded_file)
 
-        # A dictionary to map string inputs to numerical or categorical data used by the model
-        protocoltype = {'icmp': 0, 'tcp': 1, 'udp': 2}
-        service = {'IRC': 0, 'X11': 1, 'Z39_50': 2, 'aol': 3, 'auth': 4, 'bgp': 5, 'courier': 6,
-                   'csnet_ns': 7, 'ctf': 8, 'daytime': 9, 'discard': 10, 'domain': 11, 'domain_u': 12,
-                   'echo': 13, 'eco_i': 14, 'ecr_i': 15, 'efs': 16, 'exec': 17, 'finger': 18, 'ftp': 19,
-                   'ftp_data': 20, 'gopher': 21, 'harvest': 22, 'hostnames': 23, 'http': 24,
-                   'http_2784': 25, 'http_443': 26, 'http_8001': 27, 'imap4': 28, 'iso_tsap': 29,
-                   'klogin': 30, 'kshell': 31, 'ldap': 32, 'link': 33, 'login': 34, 'mtp': 35, 'name': 36,
-                   'netbios_dgm': 37, 'netbios_ns': 38, 'netbios_ssn': 39, 'netstat': 40, 'nnsp': 41,
-                   'nntp': 42, 'ntp_u': 43, 'other': 44, 'pm_dump': 45, 'pop_2': 46, 'pop_3': 47,
-                   'printer': 48, 'private': 49, 'red_i': 50, 'remote_job': 51, 'rje': 52, 'shell': 53,
-                   'smtp': 54, 'sql_net': 55, 'ssh': 56, 'sunrpc': 57, 'supdup': 58, 'systat': 59,
-                   'telnet': 60, 'tftp_u': 61, 'tim_i': 62, 'time': 63, 'urh_i': 64, 'urp_i': 65,
-                   'uucp': 66, 'uucp_path': 67, 'vmnet': 68, 'whois': 69}
-        flag = {'OTH': 0, 'REJ': 1, 'RSTO': 2, 'RSTOS0': 3, 'RSTR': 4, 'S0': 5, 'S1': 6, 'S2': 7,
-                'S3': 8, 'SF': 9, 'SH': 10}
+        # Label Encoding
+        cat_cols = ['protocoltype', 'service', 'flag']
+        for col in cat_cols:
+            le = LabelEncoder()
+            data[col] = le.fit_transform(data[col])
 
-        # Perform data mapping
-        if 'protocol_type' in data.columns:
-            data['protocol_type'] = data['protocol_type'].replace(protocoltype)
+        if st.button('Scan'):
+            columns = data.columns
+            data = scaler.transform(data)
+            data = pd.DataFrame(data, columns=columns)
 
-        if 'service' in data.columns:
-            data['service'] = data['service'].replace(service)
+            # Make a prediction
+            prediction = model.predict(data)
 
-        if 'flag' in data.columns:
-            data['flag'] = data['flag'].replace(flag)
-            
-        columns = data.columns
-        data = scaler.transform(data)
-        data = pd.DataFrame(data, columns=columns)
+            # Calculate Probability
+            probas = model.predict_proba(data)
 
-        # Make a prediction
-        prediction = model.predict(data)
+            if prediction == 'DoS':
+                prob = np.round(probas[:, 0][0] * 100)
+            elif prediction == 'Probe':
+                prob = np.round(probas[:, 1][0] * 100)
+            elif prediction == 'R2L':
+                prob = np.round(probas[:, 2][0] * 100)
+            elif prediction == 'U2R':
+                prob = np.round(probas[:, 3][0] * 100)
+            else:
+                prob = np.round(probas[:, 4][0] * 100)
 
-        # Calculate Probability
-        probas = model.predict_proba(data)
+            # Display the prediction
+            prediction_text = (
+                f'Alert: There is a {prob}% chance that you are currently experiencing a Denial of Service(DoS) attack.'
+                'Immediate action is required to mitigate the impact.'
+                if prediction == 0 else
+                f'Alert: There is a {prob}% chance that suspicious PROBING activity is occurring.'
+                'Potential reconnaissance in progress.'
+                if prediction == 1 else
+                f'Alert: There is a {prob}% probability that a REMOTE-TO-LOCAL attack is underway.'
+                'Unauthorized remote access attempt identified.'
+                if prediction == 2 else
+                f'Alert: There is a {prob}% chance that a USER-TO-ROOT attack is happening.'
+                'Suspicious privilege escalation detected.'
+                if prediction == 3 else
+                f'You are SAFE! No anomalies or security threats detected with {prob}% certainty.'
+            )
 
-        if prediction == 'DoS':
-            prob = np.round(probas[:, 0][0] * 100)
-        elif prediction == 'Probe':
-            prob = np.round(probas[:, 1][0] * 100)
-        elif prediction == 'R2L':
-            prob = np.round(probas[:, 2][0] * 100)
-        elif prediction == 'U2R':
-            prob = np.round(probas[:, 3][0] * 100)
-        else:
-            prob = np.round(probas[:, 4][0] * 100)
-
-        # Display the prediction
-        prediction_text = (
-            f'Alert: There is a {prob}% chance that you are currently experiencing a Denial of Service (DoS) attack.'
-            'Immediate action is required to mitigate the impact.'
-            if prediction == 0 else
-            f'Alert: There is a {prob}% chance that suspicious PROBING activity is occurring.'
-            'Potential reconnaissance in progress.'
-            if prediction == 1 else
-            f'Alert: There is a {prob}% probability that a REMOTE-TO-LOCAL attack is underway.'
-            'Unauthorized remote access attempt identified.'
-            if prediction == 2 else
-            f'Alert: There is a {prob}% chance that a USER-TO-ROOT attack is happening.'
-            'Suspicious privilege escalation detected.'
-            if prediction == 3 else
-            f'You are SAFE! No anomalies or security threats detected with {prob}% certainty.'
-        )
-
-        # Display the prediction with fancy formatting
-        st.markdown(
-            f"<h4>{prediction_text}</h4>",
-            unsafe_allow_html=True
-        )
+            # Display the prediction with fancy formatting
+            st.markdown(
+                f"<h4>{prediction_text}</h4>",
+                unsafe_allow_html=True
+            )
 
     else:
         # Input form
