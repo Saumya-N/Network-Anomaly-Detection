@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import pickle
-# from sklearn.preprocessing import LabelEncoder
 
 # Load model
 with open('model/model.pkl', 'rb') as f:
@@ -41,11 +40,6 @@ def detection_page():
         flag = {'OTH': 0, 'REJ': 1, 'RSTO': 2, 'RSTOS0': 3, 'RSTR': 4, 'S0': 5, 'S1': 6, 'S2': 7,
                 'S3': 8, 'SF': 9, 'SH': 10}
 
-        # Label Encoding
-        # cat_cols = ['protocoltype', 'service', 'flag']
-        # for col in cat_cols:
-        #     le = LabelEncoder()
-        #     data[col] = le.fit_transform(data[col])
 
         if 'protocoltype' in data.columns:
             data['protocoltype'] = data['protocoltype'].replace(protocoltype)
