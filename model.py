@@ -67,13 +67,13 @@ def detection_page():
             # Calculate Probability
             probas = model.predict_proba(data)
 
-            if prediction == 'DoS':
+            if prediction == 0:
                 prob = np.round(probas[:, 0][0] * 100)
-            elif prediction == 'Probe':
+            elif prediction == 1:
                 prob = np.round(probas[:, 1][0] * 100)
-            elif prediction == 'R2L':
+            elif prediction == 2:
                 prob = np.round(probas[:, 2][0] * 100)
-            elif prediction == 'U2R':
+            elif prediction == 3:
                 prob = np.round(probas[:, 3][0] * 100)
             else:
                 prob = np.round(probas[:, 4][0] * 100)
