@@ -4,9 +4,11 @@ import importlib.util
 # Set page width
 st.set_page_config(layout="wide")
 
-# Initialize session state for login
+# Initialize session state variables if not already done
 if 'logged_in' not in st.session_state:
     st.session_state.logged_in = False
+if 'dummy' not in st.session_state:
+    st.session_state.dummy = 0
 
 # Dummy user credentials
 USERNAME = "user"
@@ -16,12 +18,14 @@ PASSWORD = "pass"
 def login(username, password):
     if username == USERNAME and password == PASSWORD:
         st.session_state.logged_in = True
+        st.session_state.dummy += 1  # Update dummy variable to trigger rerun
     else:
         st.error("Invalid username or password")
 
 
 def logout():
     st.session_state.logged_in = False
+    st.session_state.dummy += 1  # Update dummy variable to trigger rerun
 
 
 # Login Page
