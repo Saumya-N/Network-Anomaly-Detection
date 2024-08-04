@@ -83,9 +83,8 @@ def detection_page():
             ]]
             columns = [
                 'protocoltype', 'service', 'flag', 'srcbytes', 'dstbytes', 'loggedin', 'count', 'srvcount', 'serrorrate',
-                'srvserrorrate', 'samesrvrate', 'diffsrvrate', 'dsthostsrvcount', 'dsthostsamesrvrate', 'dsthostdiffsrvrate',
-                'dsthostsamesrcportrate', 'dsthostsrvdiffhostrate', 'dsthostserrorrate', 'dsthostsrvserrorrate',
-                'dsthostcount', 'lastflag'
+                'srvserrorrate', 'samesrvrate', 'diffsrvrate', 'dsthostcount', 'dsthostsrvcount', 'dsthostsamesrvrate', 'dsthostdiffsrvrate',
+                'dsthostsamesrcportrate', 'dsthostsrvdiffhostrate', 'dsthostserrorrate', 'dsthostsrvserrorrate','lastflag'
             ]
             data = pd.DataFrame(input_data, columns=columns)
             data = scaler.transform(data)
