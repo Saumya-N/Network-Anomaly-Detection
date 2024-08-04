@@ -1,0 +1,2 @@
+protocoltype,service,flag,srcbytes,dstbytes,loggedin,count,srvcount,serrorrate,srvserrorrate,samesrvrate,diffsrvrate,dsthostcount,dsthostsrvcount,dsthostsamesrvrate,dsthostdiffsrvrate,dsthostsamesrcportrate,dsthostsrvdiffhostrate,dsthostserrorrate,dsthostsrvserrorrate,lastflag
+tcp,telnet,SF,621,8356,1,1,1,0,0,1,0,255,4,0.02,0.02,0,0,0,0,1

@@ -1,0 +1,2 @@
+protocoltype,service,flag,srcbytes,dstbytes,loggedin,count,srvcount,serrorrate,srvserrorrate,samesrvrate,diffsrvrate,dsthostcount,dsthostsrvcount,dsthostsamesrvrate,dsthostdiffsrvrate,dsthostsamesrcportrate,dsthostsrvdiffhostrate,dsthostserrorrate,dsthostsrvserrorrate,lastflag
+tcp,ftp_data,SF,491,0,0,2,2,0,0,1,0,150,25,0.17,0.03,0.17,0,0,0,21

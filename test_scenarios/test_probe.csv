@@ -1,0 +1,2 @@
+protocoltype,service,flag,srcbytes,dstbytes,loggedin,count,srvcount,serrorrate,srvserrorrate,samesrvrate,diffsrvrate,dsthostcount,dsthostsrvcount,dsthostsamesrvrate,dsthostdiffsrvrate,dsthostsamesrcportrate,dsthostsrvdiffhostrate,dsthostserrorrate,dsthostsrvserrorrate,lastflag
+tcp,private,REJ,0,0,0,2,1,0,0,0.5,1,255,1,0,0.31,0.28,0,0,0,20
