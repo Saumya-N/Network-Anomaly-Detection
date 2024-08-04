@@ -73,20 +73,20 @@ def detection_page():
         dsthostsrvdiffhostrate = col4.number_input('Dst Host Srv Diff Host Rate', min_value=0.0, max_value=1.0)
         dsthostserrorrate = col4.number_input('Dst Host Serror Rate', min_value=0.0, max_value=1.0)
         dsthostsrvserrorrate = col4.number_input('Dst Host Srv Serror Rate', min_value=0.0, max_value=1.0)
-        dsthostrerrorrate = col4.number_input('Dst Host Rerror Rate', min_value=0.0, max_value=1.0)
+        dsthostcount = col4.number_input('Dst Host Count', min_value=0)
 
         if st.button('Scan'):
             input_data = [[
                 protocoltype[protocoltype_i], service[service_i], flag[flag_i], srcbytes, dstbytes, loggedin, count,
                 srvcount, serrorrate, srvserrorrate, samesrvrate, diffsrvrate, dsthostsrvcount, dsthostsamesrvrate,
                 dsthostdiffsrvrate, dsthostsamesrcportrate, dsthostsrvdiffhostrate, dsthostserrorrate, dsthostsrvserrorrate,
-                dsthostrerrorrate, lastflag
+                dsthostcount, lastflag
             ]]
             columns = [
                 'protocoltype', 'service', 'flag', 'srcbytes', 'dstbytes', 'loggedin', 'count', 'srvcount', 'serrorrate',
                 'srvserrorrate', 'samesrvrate', 'diffsrvrate', 'dsthostsrvcount', 'dsthostsamesrvrate', 'dsthostdiffsrvrate',
                 'dsthostsamesrcportrate', 'dsthostsrvdiffhostrate', 'dsthostserrorrate', 'dsthostsrvserrorrate',
-                'dsthostrerrorrate', 'lastflag'
+                'dsthostcount', 'lastflag'
             ]
             data = pd.DataFrame(input_data, columns=columns)
             data = scaler.transform(data)
