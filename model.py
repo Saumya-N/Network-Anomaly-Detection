@@ -66,14 +66,14 @@ def detection_page():
         srvserrorrate = col2.number_input('Srv Serror Rate', min_value=0.0, max_value=1.0)
         samesrvrate = col3.number_input('Same Srv Rate', min_value=0.0, max_value=1.0)
         diffsrvrate = col3.number_input('Diff Srv Rate', min_value=0.0, max_value=1.0)
+        dsthostcount = col3.number_input('Dst Host Count', min_value=0)
         dsthostsrvcount = col3.number_input('Dst Host Srv Count', min_value=0)
         dsthostsamesrvrate = col3.number_input('Dst Host Same Srv Rate', min_value=0.0, max_value=1.0)
-        dsthostdiffsrvrate = col3.number_input('Dst Host Diff Srv Rate', min_value=0.0, max_value=1.0)
+        dsthostdiffsrvrate = col4.number_input('Dst Host Diff Srv Rate', min_value=0.0, max_value=1.0)
         dsthostsamesrcportrate = col4.number_input('Dst Host Same Src Port Rate', min_value=0.0, max_value=1.0)
         dsthostsrvdiffhostrate = col4.number_input('Dst Host Srv Diff Host Rate', min_value=0.0, max_value=1.0)
         dsthostserrorrate = col4.number_input('Dst Host Serror Rate', min_value=0.0, max_value=1.0)
         dsthostsrvserrorrate = col4.number_input('Dst Host Srv Serror Rate', min_value=0.0, max_value=1.0)
-        dsthostcount = col4.number_input('Dst Host Count', min_value=0)
 
         if st.button('Scan'):
             input_data = [[
