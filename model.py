@@ -78,9 +78,8 @@ def detection_page():
         if st.button('Scan'):
             input_data = [[
                 protocoltype[protocoltype_i], service[service_i], flag[flag_i], srcbytes, dstbytes, loggedin, count,
-                srvcount, serrorrate, srvserrorrate, samesrvrate, diffsrvrate, dsthostsrvcount, dsthostsamesrvrate,
-                dsthostdiffsrvrate, dsthostsamesrcportrate, dsthostsrvdiffhostrate, dsthostserrorrate, dsthostsrvserrorrate,
-                dsthostcount, lastflag
+                srvcount, serrorrate, srvserrorrate, samesrvrate, diffsrvrate, dsthostcount, dsthostsrvcount, dsthostsamesrvrate,
+                dsthostdiffsrvrate, dsthostsamesrcportrate, dsthostsrvdiffhostrate, dsthostserrorrate, dsthostsrvserrorrate, lastflag
             ]]
             columns = [
                 'protocoltype', 'service', 'flag', 'srcbytes', 'dstbytes', 'loggedin', 'count', 'srvcount', 'serrorrate',
